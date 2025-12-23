@@ -1,114 +1,137 @@
-> Task1:
+> Task 1:
 >
-> 1.CreateaSystem ArchitectureDiagram showingbothsystemsand network
+> 1. Create a System Architecture Diagram showing both systems and network
 > connections
 >
-> Thesystem architectureconsistsoftwodifferentvirtualmachinesand
-> alsoahost onWindows11,usingOracleVirtualBox.AnUbuntuServer
-> virtualmachinesis deployed asa server,whileaseparateworkstationsystem
-> isused for administration.
+> The system architecture consists of two different virtual machines and
+> also a host on Windows 11, using Oracle VirtualBox. An Ubuntu Server
+> virtual machine is deployed as a server, while a separate workstation
+> system is used for administration.
 >
-> <img src="./oqgrsql4.png" style="width:6.5in;height:5.82292in" />Networkconnectivityisprovided
-> throughViirtualBoxnetworking,withNAT enablingand
-> hostonlynetwork,tohelp withsecureSSH-based management betweensystems.
+> <img src="./oqgrsql4.png" style="width:6.5in;height:5.82292in" />
 >
-> Task2and 3:
+> Network connectivity is provided through VirtualBox networking, with NAT
+> enabled and a host-only network to help with secure SSH-based management
+> between systems.
 >
-> Asmymaindistributionfor virtualmachine,IhavechooseUbunto.
+> Task 2 and 3:
 >
-> Ubuntoisverystableand issupported
-> constantlywithupdates,ubuntoprovides5 yearsofsecurityand
-> maintenanceupdates,whichreducetheoverallriskofthe system
-> beingpenetratedasitsmoresecurebutalsomaintenancewise.
+> As my main distribution for the virtual machine, I have chosen Ubuntu.
 >
-> Ubuntoalsohasastrongamountofpackageswhichoffer variousfeaturesthathelp
-> withtheuser experienceasithelptracksystem performancebutalsoenhanceits
-> security,someofwhichare:(opensshserver,
-> ufw,fail2ban,ssystat,iperf3,fio).
+> Ubuntu is very stable and is supported constantly with updates. Ubuntu
+> provides 5 years of security and maintenance updates, which reduces the
+> overall risk of the system being penetrated, as it is more secure and
+> easier to maintain.
 >
-> UbuntoSecurity,ubuntohaspackgessuchasAppArrmor whichinclud(mandatory
-> accesscontroll)and alsohasfeatureslikeunattended upgred for automatic
-> securitypatches,topreventold softwarebeingattacked.
+> Ubuntu also has a strong amount of packages which offer various features
+> that help with the user experience, as they help track system
+> performance but also enhance security. Some of these are: OpenSSH Server,
+> UFW, Fail2Ban, sysstat, iperf3, fio.
 >
-> And asmysecond VM instanceIchoose,LinuxMint.
+> Ubuntu security: Ubuntu has packages such as AppArmor, which includes
+> mandatory access control, and also has features like unattended upgrades
+> for automatic security patches, to prevent old software being attacked.
 >
-> Linuxmintisrobustand isuser friendlyisquitesimpletouseand
-> nottoocomplex for beginnersGUIisamassiveadvancemakingiteasier
-> tonavigate,italso maintainsstabilityand
-> alsohasfeatureslikeCinnamonthat makesclientsystem
-> moreefficientbyminimizingtimespentonconfiguring,
+> As my second VM instance, I chose Linux Mint.
 >
-> Overallverygood,asituser friendlystableand reliabletouseasthesecond
-> instance.
+> Linux Mint is robust and user friendly, quite simple to use and not too
+> complex for beginners. The GUI is a massive advantage, making it easier
+> to navigate. It also maintains stability and has features like Cinnamon
+> that make the client system more efficient by minimizing time spent on
+> configuring.
 >
-> UbuntoServer waschosenastheprimarysystemduetoits longterm support
-> modelthathelpsguaranteefiveyearsofstabilityand
-> securityupdates,tomakethe operationrisksmaller
-> duringtheworkingtime,usesofthecommandlineforall server
-> administrationand performancetesting.Incontrast,LinuxMintwasselected
-> for theworkstationVM asitsefficient and user
-> friendly,hasGUI.Thisstabilityand easeofusesimplifiestheclient
-> sideadministrativetasks,and documentation while
-> maintainingareliableenvironmentforaccessingtheserver for
-> essentialcommand linetools.
+> Overall, it is very good, as it is user friendly, stable, and reliable to
+> use as the second instance.
+>
+> Ubuntu Server was chosen as the primary system due to its long-term
+> support model that helps guarantee five years of stability and security
+> updates, making the operational risks smaller during the working time.
+> It uses the command line for all server administration and performance
+> testing. In contrast, Linux Mint was selected for the workstation VM as
+> it is efficient, user friendly, and has a GUI. This stability and ease
+> of use simplify the client-side administrative tasks and documentation,
+> while maintaining a reliable environment for accessing the server for
+> essential command-line tools.
+>
+> ||
+> ||
+> ||
+>
 
-||
-||
-||
+Advantages 
 
-||
-||
-||
-||
+Ubuntu -Long-term stability , extensive community support, simple package management . 
 
-> Ubunto,ishighlyknownforbegginersasithasfrendlyinterfaceisstable.
-> Makesit easythroughinstallingfrom terminal,itisverysecureand
-> isconstantlybeing supported withupdates.
-> Beingmonolithickernelitshighinperformanceas
-> everythingrunsdirectlyinkernel .
->
-> Ichoseubuntoover theotherslikelinuxmint,asithasmoresupportasinupdates
-> ithascommunityresourcesand itssecurityisbetter makingitbetter for
-> theaverage user lastlyhoweasyitisonbeginners.
->
-> Task4: Settings
->
-> Inthispicture,wecanseesomebasicsystem informationthattheVM has access,
-> tothisisbased onhowmuchIhavegavethesystem intheinitialsetup,Igave6GB
-> or RAM (5973MB) 6Processorscores:6,andfor storageI gaveit60gb,mostof
-> theseareprobablymorethanitneeded torun,butIhavechosetogiveitthismuch
+Linux Mint -Very user-friendly desktop environment , easy to install, stable Debian/Ubuntu base. 
 
-<img src="./zgj0zuqv.png"
-style="width:3.27083in;height:2.63542in" /><img src="./3rlc3kfx.png"
-style="width:5.625in;height:1.30208in" /><img src="./vwesyzih.png" style="width:6in;height:1.05208in" />
 
-> tomakesureI don'thaveanyperformanceissues,
->
-> I'musingBridgeadapter asmynetworkadapter,thisusesthesameipasmyactual
-> router and givetheVM accesstointernetaccess,alsoneeded later onforthe
-> operationoftheSSh
->
-> UsingacommandintheVM,(IPa) Ihavebeenabletochecktheip thatIhaveon theVM
-> .Thiscommandalsoshowand giveother importantinformationaboutthe system.
->
-> IPADD0RES:192.168.0.170/24
+Disadvantages 
 
-<img src="./hyje0ncv.png" style="width:6in;height:3.42708in" />
+Ubuntu -Slightly larger install .
 
-> Task5:runningcommandsand showingresaults
->
-> Command :uname
->
-> Thiscommand showthenameofoperatingsystem kernel
->
-> Command :Free
->
-> Thiscommand displaysthefreeand alsotheused physicalmemory,thischecks
-> performanceand resourceallocationoftheUbuntuserver
->
-> Command:df –h
->
-> Thisshowsthestatsofthedisk, suchasdiskspaceused and theamountavailable
-> ontheUbuntoServer.
+Linux Mint -Very user-friendly desktop environment , easy to install, stable Debian/Ubuntu base. 
 
-<img src="./d1xsjmiq.png" style="width:6.5in;height:2.11458in" /><img src="./ahoqfjqb.png" style="width:6in;height:3.11458in" />
+Not a server focused distribution. 
+
+
+> ||
+> ||
+> ||
+>
+> Ubuntu is highly known for beginners as it has a friendly interface and
+> is stable. It makes it easy to install through the terminal, it is very
+> secure, and it is constantly being supported with updates. Being a
+> monolithic kernel, it is high in performance as everything runs directly
+> in the kernel.
+>
+> I chose Ubuntu over others like Linux Mint, as it has more support in
+> updates, stronger community resources, and better security, making it
+> better for the average user and easier for beginners.
+>
+> Task 4: Settings
+>
+> In this picture, we can see some basic system information that the VM has
+> access to. This is based on how much I gave the system in the initial
+> setup. I gave 6 GB of RAM (5973 MB), 6 processor cores, and for storage
+> I gave it 60 GB. Most of these are probably more than it needed to run,
+> but I chose to give it this much
+>
+> <img src="./zgj0zuqv.png" style="width:3.27083in;height:2.63542in" />
+> 
+> <img src="./3rlc3kfx.png" style="width:5.625in;height:1.30208in" />
+> 
+> <img src="./vwesyzih.png" style="width:6in;height:1.05208in" />
+>
+> to make sure I don't have any performance issues.
+>
+> I'm using a Bridged adapter as my network adapter. This uses the same IP
+> as my actual router and gives the VM access to the internet, also needed
+> later on for the operation of SSH.
+>
+> Using a command in the VM (ip a), I have been able to check the IP that I
+> have on the VM. This command also shows and gives other important
+> information about the system.
+>
+> IP ADDRESS: 192.168.0.170/24
+>
+> <img src="./hyje0ncv.png" style="width:6in;height:3.42708in" />
+>
+> Task 5: running commands and showing results
+>
+> Command: uname
+>
+> This command shows the name of the operating system kernel.
+>
+> Command: free
+>
+> This command displays the free and used physical memory. This checks
+> performance and resource allocation of the Ubuntu Server.
+>
+> Command: df -h
+>
+> This shows the state of the disk, such as disk space used and the amount
+> available on the Ubuntu Server.
+>
+> <img src="./d1xsjmiq.png" style="width:6.5in;height:2.11458in" />
+>
+> <img src="./ahoqfjqb.png" style="width:6in;height:3.11458in" />
