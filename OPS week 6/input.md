@@ -1,5 +1,7 @@
 CpuandMemorytestingperformance:
-<img src="./1jt0doxy.png" style="width:6.5in;height:0.60417in" /><img src="./bn1opol3.png" style="width:6.5in;height:0.9375in" />
+
+<img src="./1jt0doxy.png" style="width:6.5in;height:0.60417in" />
+<img src="./bn1opol3.png" style="width:6.5in;height:0.9375in" />
 
 BaseLineCpuand Memoryusagewhiletheserver isidle Cpu=%2.6
 
@@ -91,4 +93,5 @@ coresand only1gb ofram whichthesystem could handlemorestress.
 
 <img src="./4av1tip0.png"
 style="width:2.76042in;height:1.01042in" />ServiceResponse:
+
 
