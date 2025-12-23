@@ -1,83 +1,92 @@
-**1**.Selectapplicationsrepresentingdifferentworkload
-types(e.g.CPU-intensive,
-RAMintensive,I/O-intensive,Network-intensive,and Server
-applicationssuchasgame servers) for performanceevaluationand
-createanApplicationSelectionMatrixlisting
-applicationswithjustificationsfor choosingthem.
+**1**. Select applications representing different workload types (e.g. CPU-intensive, RAM intensive, I/O-intensive, Network-intensive, and Server applications such as game servers) for performance evaluation and create an Application Selection Matrix listing applications with justifications for choosing them.
 
 ||
 ||
 ||
-||
-||
-||
-||
-||
 
+Cpu intensive  -Stress -ng  -Cpu stress tool to stress cores with mothods -Because with this tool you can see how much the cpu is being used. 
+
+RAM Intensive -memtester  -Find and test blocks of memory from userspace  -Simple comand to see the amount of resources 
+
+I/O intensive -fio  -Flexible I/O benchmarks read/write controls block size  -Storage I/O testing produces. 
+
+Network intensive -iperf3 -Network tester between client and server. -Accurate measurements of bandwith and packet loss for network. 
+
+Server  -apache2 -HTTP server that handles multiple connections -Provids real world server workload handling memory network. 
+
+
+
+||
+||
+||
+ 
 **Task2:**
 
-FirstlyIneeded tousewhoamitofind theusernamewhichwasvboxuser.
+Firstly I needed to use whoami to find the username which was vboxuser.
 
-Thenusingip atofind theiptoconnecttoSSH.
+Then using ip a to find the ip to connect to SSH.
 
-thisisthecommand I'veused toconnecttossh:
-ssh[<u>vboxuser@192.168.0.170</u>](mailto:vboxuser@192.168.0.170)
+this is the command I've used to connect to ssh:
+ssh [<u>vboxuser@192.168.0.170</u>](mailto:vboxuser@192.168.0.170)
 
-sudoaptupdate,toupdatethesystem,
+sudo apt update, to update the system,
 
-sudoaptinstallopenssh-server –y,istallthesshserver thatallowsremotelogin
+sudo apt install openssh-server –y, istall the ssh server that allows remote login
 
-<img src="./al2pcnlm.png" style="width:6.5in;height:4.20833in" />thenused
-“systemctlstatusssh”tocheckifthesystem isrunning.And itwasshowing
-activerunning
+<img src="./al2pcnlm.png" style="width:6.5in;height:4.20833in" />
+
+then used “systemctl status ssh” to check if the system is running. And it was showing active running
 
 <img src="./hcctedzi.png" style="width:6.5in;height:4.375in" /><img src="./xkrp5fuw.png" style="width:6.5in;height:3.1875in" />
 
-Ialsoadded UFWrules,iffirewallisenabled,IallowSSH
+I also added UFW rules, if firewall is enabled, I allow SSH
 
-**Task** **3:** **Expected** **resources** **Profile**
-Thissectionwillhavetheresourceusageofeachselected
-applicationbeforeperformance
+**Task 3:** **Expected resources Profile**
+This section will have the resource usage of each selected application before performance testing is done. The profile will describe the cpu load, memory load, disk load, and network. These will be from normal benchmarking tools.
 
-testingisdone.Theprofilewilldescribethecpuload, memoryload,diskload,and
-network.Thesewillbefrom normalbenchmarkingtools.
+1. Cpu Intensive
 
-1.CpuIntensive
+First was cpu intensive using stress –ng, it puts a lot of load on the cpu by running multiple threads.
 
-Firstwascpuintensiveusingstress –ng,itputsalotofload
-onthecpubyrunningmultiple threads.
+I expect:
 
-Iexpect:
+Cpu usage to be extremely high 90-100%
 
-Cpuusagetobeextremelyhigh90-100%
+Ram usage will be low to moderate 100-500MB mostly from code
 
-Ram usagewillbelowtomoderate100-500MB mostlyfrom code
+Disk usage should stay the same as base values as it testing mainly the cpu
 
-Diskusageshould staythesameasbasevaluesasittestingmainlythecpu
+Network also should stay the same as it a test on the cpu and has nothing to do with the network.
 
-Networkalsoshould staythesameasitsatestonthecpuand hasnothingtodowiththe
-network.
+||
+||
+||
+
+CPU -Very High 
+
+RAM -Low 
+
+DISK -None 
+
+NETWORK -None 
+
 
 ||
 ||
 ||
 ||
-||
-||
-||
 
-2.RamIntensive
+2. Ram Intensive
 
-Using–vmthiswillstresstheram byallocatingmemory Iexpect:
+Using –vm this will stress the ram by allocating memory I expect:
 
-Cpuusagetobemoderateasmemoryrequirescpusupport
+Cpu usage to be moderate as memory requires cpu support
 
-Ram usagetobeExtremelyHigh-alsodependsonthevaluethatispassed,for example
---vm-bytes2G willallocate2GB ofram
+Ram usage to be Extremely High - also depends on the value that is passed, for example --vm-bytes 2G will allocate 2GB of ram
 
-DiskUsage:
+Disk Usage:
 
-Noneasitonlystressestheram
+None as it only stresses the ram
 
 Network:
 
@@ -89,242 +98,273 @@ None.
 ||
 ||
 
+CPU Moderate 
+
+RAM Very High 
+
+DISK None 
+
+NETWORK None 
+
+
 ||
 ||
 ||
 ||
 
-3.DiskI/O intensive
+3. Disk I/O intensive
 
-Usingthecommand ddthatwriteslargefilesand measuresdiskthroughput.
+Using the command dd that writes large files and measures disk throughput.
 
 Expected Usage:
 
-Cpu,Iexpectittobeverylow
+Cpu, I expect it to be very low
 
-Ram,alsoshould beverylowalmostbaseline
+Ram, also should be very low almost baseline
 
-Disk,Veryhighasitwillbeusingittowriteand read largefile.Command
-exampleddif-/dev/zeroof=test filebs=1gcount=1,whichwrites1GB
+Disk, Very high as it will be using it to write and read large file. Command example dd if=/dev/zero of=testfile bs=1g count=1, which writes 1GB
 
-Network,none
+Network, none
 
-||
-||
-||
-||
 ||
 ||
 ||
 
-4.NetworkIntensive
+CPU Very low 
 
-Measurenetworkactivitybetweenaclientandaserver
+RAM Very low 
+
+DISK Very HIgh 
+
+NETWORK None 
+
+
+||
+||
+||
+||
+
+4. Network Intensive
+
+Measure network activity between a client and a server
 
 Expected usage:
 
-Cpu,usagemoderateduetohighspeedsnetwork
+Cpu, usage moderated due to high speeds network
 
-Ram,low
+Ram, low
 
-Disk,low
+Disk, low
 
-Network,ExtremelyHigh–saturatesavailablebandwidth100-1000MBPS
+Network, Extremely High – saturates available bandwidth 100-1000MBPS
 
-||
-||
-||
-||
 ||
 ||
 ||
 
-5.Server typeapplication
+CPU Moderate 
 
-Astandard HTTPweb server used tosimulateserver behavior
+RAM Low 
+
+DISK None 
+
+NETWORK Very high 
+
+
+||
+||
+||
+||
+
+5. Server type application
+
+A standard HTTP web server used to simulates server behavior
 
 Expected usage:
 
-Cpu,lowatidle,butmoderatewhileunder loadtesting
+Cpu, low at idle, but moderate while under load testing
 
 Ram Usage:
 
-Moderate200-400MB dependingontheloadsofthecpuand whatisbeingused
+Moderate 200-400MB depending on the load of the cpu and what is being used
 
 Disk:
 
-Lowtomoderate, savingfilesand doingother activities
+Low to moderate, saving files and doing other activities
 
-Networkusage:
+Network usage:
 
-Moderatetohighdependingontheamountofrequestsarebeingsentfrom andtothe
-server.
+Moderate to high depending on the amount of requests are being sent from and to the server.
 
 ||
 ||
 ||
 ||
+
+CPU Low - Moderate 
+
+RAM Moderate 
+
+DISK Low 
+
+NETWORK Moderate - High 
+
+
 ||
 ||
 ||
 
-Task4:MonitoringStrategyfor performanceEvaluation
-Intask4Iwillbemonitoringapproachused toevaluateresourceusagefor
-eachselected
-application,cpu,ram,disk,networkandserver.Acombinationoftimeand recorded
-monitoringtoolsisused tocapturetheperformanceand resource
-usageofthecpu,ram, diskandnetwork.
+Task 4: Monitoring Strategy for performance Evaluation
+In task 4 I will be monitoring approach used to evaluate resource usage for each selected application, cpu, ram, disk, network and server. A combination of time and recorded monitoring tools is used to capture the performance and resource usage of the cpu, ram, disk and network.
 
-Commandstoinstallsomeofthemonitoringsystems.
+Commands to install some of the monitoring systems.
 
-sudoaptupdate(updatesallofthesystemstomakesureeverythingworksgood,alsothe
-installingprocessworkssmoothly)
+sudo apt update (updates all of the systems to make sure everything works good, also the installing process works smoothly)
 
-sudoaptinstallstress-ngfioiperf3apache2 –y(someofthetoolsthatwewilluseto
-monitor specificor multiplecomponentsand theirperformance.)
+sudo apt install stress-ng fio iperf3 apache2 –y (some of the tools that we will use to monitor specific or multiple components and their performance.)
 
-1.CpuMonitoring
+1. Cpu Monitoring
 
 Commands:
 
 > • Top • Htop
->
+> 
 > • Mpstat
 
-Top and htopgiverealtimecpuusageand showhowmucheachapplicationusses
+Top and htop give real time cpu usage and show how much each application uses
 
-Mpstatgiveaccuratecpuusageover timeacrossallcores
+Mpstat give accurate cpu usage over time across all cores
 
-Iwillstartwith<u>htop.</u>Thenusestress-ng–cpu4–timeout60s
+I will start with <u>htop.</u> Then use stress-ng –cpu 4 –timeout 60s
 
-Iwillrecord :
+I will record :
 
-Cpu%per core
+Cpu% per core
 
 Load average
 
 Temperature
 
-Tologthedata:
+To log the data:
 
-Mpstat160,thiswillcapturecpuusageeverysecond for60seconds
+Mpstat 1 60, this will capture cpu usage every second for 60 seconds
 
-2.Ram Monitoring
+2. Ram Monitoring
 
 Commands
 
-> • Free–h • Vmstat • Htop
+> • Free –h • Vmstat • Htop
 
-Free–showstotaland used ram
+Free – shows total and used ram
 
-Vmstat –showsmemoryactivity
+Vmstat – shows memory activity
 
-Htop –visualisesmemoryusageper process
+Htop – visualises memory usage per process
 
-Howtorun:
+How to run:
 
-Free–h,checkbaseram usage
+Free –h, check base ram usage
 
-Stress-ng–vm 2–bm-bytes2g–timeout60s,runsmemoryload,tostresstest
+Stress-ng –vm 2 –vm-bytes 2g –timeout 60s, runs memory load, to stress test
 
-Watch –n1free–h,monitor changes
+Watch –n1 free –h, monitor changes
 
-Vmstat160,capturesystem activity
+Vmstat 1 60, captures system activity
 
-Datatorecord:
+Data to record:
 
-Totalram consumption
+Total ram consumption
 
 Activity
 
-Buffer andcachechanges
+Buffer and cache changes
 
-3.Diskmonitoring
+3. Disk monitoring
 
 Commands
 
-> • Iostat • Iotop • Df–h
+> • Iostat • Iotop • Df –h
 
-Iostat –showsdiskread andwritespeeds
+Iostat – shows disk read and write speeds
 
-Iotop –showswhichprocessescausediskload
+Iotop – shows which processes caused disk load
 
-Df–h –confirmsdiskcapacityand freespacebeforetests
+Df –h – confirms disk capacity and free space before tests
 
-Howtorun:
+How to run:
 
-Iostat –xz 1,startdiskmonitoring
+Iostat –xz 1, start disk monitoring
 
-Ddif=/dev/zeroof=testfilebs=1gcount-1oflag=direct,runsdiskstresstest
+Dd if=/dev/zero of=testfile bs=1g count=1 oflag=direct, runs disk stress test
 
-Datarecorded:
+Data recorded:
 
-MB/sthroughput
+MB/s throughput
 
-Diskutilisation
+Disk utilisation
 
-Read and writespeeds
+Read and write speeds
 
-4.Networkmonitoring
+4. Network monitoring
 
 Commands:
 
 > • Iftop • Nload
->
-> • Sar –nDEV
+> 
+> • Sar –n DEV
 
-Iftop,showsliveincoming/outgoingtraffic
+Iftop, shows live incoming/outgoing traffic
 
-Nload,visualisestotalbandwidthusage
+Nload, visualises total bandwidth usage
 
-Sar,recordscontinuousnetworkstatistics
+Sar, records continuous network statistics
 
-Howtorun:
+How to run:
 
-Sudoiftop,startsmonitoring
+Sudo iftop, starts monitoring
 
-Iperf3–s,ontheserver
+Iperf3 –s, on the server
 
-iperf3–cSERVER IP–t30,onclient,stresstools
+iperf3 –c SERVER_IP –t 30, on client, stress tools
 
-Datarecorded: BandwidthMBPs
+Data recorded: Bandwidth MBPs
 
-Packetrate
+Packet rate
 
-Networkutilization
+Network utilization
 
-Sar –nDEV 130,tologmetrics
+Sar –n DEV 1 30, to log metrics
 
-5.Server Applicationmonitoring
+5. Server Application monitoring
 
 Commands
 
 > • Htop
->
-> • Apache2ctlstatus • Iftop
->
+> 
+> • Apache2ctl status • Iftop
+> 
 > • Ab
 
-Web serversrequiremostoftheabovetomonitorcpu,ramand network
+Web servers require most of the above to monitor cpu, ram and network
 
-Ab,generatemeasurableHTTPloads
+Ab, generate measurable HTTP loads
 
-Howtorun:
+How to run:
 
-Sudosystemctlstartapache2,startsapacheservice
+Sudo systemctl start apache2, starts apache service
 
 Htop
 
-Sudoiftop ,startsmonitoringperformanceand resourcesuser
+Sudo iftop , starts monitoring performance and resources usage
 
-Ab 0n2000–c50[<u>http://server</u>](http://server/)ip/
+Ab -n2000 -c50 [<u>http://server</u>](http://server/) ip/
 
 Recorded data:
 
-Requesteper second
+Requests per second
 
-Apachememoryusage
+Apache memory usage
 
-Cpuspikes
+Cpu spikes
 
 Network
