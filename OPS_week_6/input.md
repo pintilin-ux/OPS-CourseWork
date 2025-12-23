@@ -1,115 +1,96 @@
-CpuandMemorytestingperformance:<img src="./p42ctkaa.png" style="width:6.5in;height:0.60417in" /><img src="./ffbzmfxu.png" style="width:7.5in;height:4.6875in" />
+Cpu and Memory testing performance:
 
-BaseLineCpuand Memoryusagewhiletheserver isidle Cpu=%2.6
+<img src="./p42ctkaa.png" style="width:6.5in;height:0.60417in" />
 
-Memory=%6.6
+<img src="./ffbzmfxu.png" style="width:7.5in;height:4.6875in" />
 
-ThisistheCpuand Memoryusagewhilethecpuisunder
-stresstest,thishasbeendoneusing :stress– cpu2 –timeout60
+Base Line Cpu and Memory usage while the server is idle  
+Cpu = %2.6
 
-Cpu=%99.7
+Memory = %6.6
 
-Memory=%6.7
+This is the Cpu and Memory usage while the cpu is under stress test, this has been done using :stress– cpu2 –timeout60
 
-<img src="./qm5o0eav.png" style="width:6.5in;height:0.72917in" />Memory
-Stresstestusingcommand :stress –vm 1–vm-bytes4G
-–timeout60,thisloads4Gygabitesofdataon theRamand stressesbothcpuand ram
-for 60seconds
+Cpu = %99.7
+
+Memory = %6.7
+
+<img src="./qm5o0eav.png" style="width:6.5in;height:0.72917in" />
+
+Memory Stress test using command :stress –vm 1–vm-bytes4G –timeout60, this loads 4Gygabites of data on the Ram and stresses both cpu and ram for 60 seconds
 
 <img src="./fqw3q10l.png" style="width:6.5in;height:0.9375in" />
 
-NetworkPerformanceTesting
+Network Performance Testing
 
-Objective,istomeasurethebaselinelatencyandthroughputthenmeasurethrouhputunder
-load.
+Objective, is to measure the baseline latency and throughput then measure throughput under load.
 
-Used iperf3tomonitorserver performance.
+Used iperf3 to monitor server performance.
 
-Ping192.168.0.170 -n10:
+Ping 192.168.0.170 -n 10:
 
-<img src="./lndaww0p.png" style="width:6.5in;height:4.21875in" />Used
-thistogetbasevaluesofthenetworkand howfastweretrieved
-thedatausingping,whenthe server wasntunder load
-wecanseethatthedataloaded fast.
+<img src="./lndaww0p.png" style="width:6.5in;height:4.21875in" />
+
+Used this to get base values of the network and how fast we retrieved the data using ping, when the server wasnt under load we can see that the data loaded fast.
 
 <img src="./3ojdwhwl.png" style="width:6.5in;height:4.14583in" />
 
 Results:
 
-Iperf3measure26Gibts/secandalso30.3transfer over 10sasshownintherun.
+Iperf3 measure 26Gi bts/sec and also 30.3 transfer over 10s as shown in the run.
 
-Interpretation,highThroughputindicatesacapablenetworkpathonthehost,asitsbridgeadaptor
-thati useonthevm,ifthroughputfallsunder other loadswecanconsider
-bottleneckstoCPUorvirtualization overhead.
+Interpretation, high Throughput indicates a capable network path on the host, as its bridge adaptor that i use on the vm, if throughput falls under other loads we can consider bottlenecks to CPU or virtualization overhead.
 
-Analysisand findings,Baselinemeasurementsshowstheserver isunder
-lightloadsatrest,lowcpuand memoryusage,Under aworkload (stress--cpu2)
-Cpuusagereached near fullutilisationascoreand responsetimeincreased
-accordingly.Memorywastested (--vm) showed memoryusageincreadfrom
-minimalload toaveryhighload of41.7indicatingram
-wassufficient,Networktestingwithiperf3shows ahighthroughputof26gb.
+Analysis and findings, Baseline measurements show the server is under light loads at rest, low cpu and memory usage. Under a workload (stress--cpu2) Cpu usage reached near full utilisation as core and response time increased accordingly. Memory was tested (--vm) showed memory usage incread from minimal load to a very high load of 41.7 indicating ram was sufficient. Network testing with iperf3 shows a high throughput of 26gb.
 
-DiskI/O Performance:
+Disk I/O Performance:
 
-Objectivewastomeasurethebaselinediskoutput,performanceunder baselineand
-under load,tofind outifstorageisabottleneck.
+Objective was to measure the baseline disk output, performance under baseline and under load, to find out if storage is a bottleneck.
 
-Iinstalled sysstatsandfio,tomeasurethediskperformance
+I installed sysstats and fio, to measure the disk performance
 
 <img src="./353yzkkj.png" style="width:7.5in;height:6.20833in" />
 
-Write(MiB/0s) =2195Mibs(2301MB’s) mainspeed metricthatthedrivecanwrite.
+Write (MiB/0s) = 2195 MiBs (2301MB’s) main speed metric that the drive can write.
 
-WriteIpos,2194Ipos,
+Write Iops, 2194 Iops,
 
-<img src="./kwnrt5t3.png" style="width:7.5in;height:5in" /><img src="./bvatmctb.png" style="width:7.5in;height:1.40625in" />
+<img src="./kwnrt5t3.png" style="width:7.5in;height:5in" />
+<img src="./bvatmctb.png" style="width:7.5in;height:1.40625in" />
 
-Latency:443.9 usec,averagelatencyofthedrive
+Latency: 443.9 usec, average latency of the drive
 
-Command :fio --name=randrw--filename=/tmp/disk_testfile--size=1G
---bs=4k--rw=randrw--rwmixread=70
---direct=1--numjobs=4--runtime=60–time_based
+Command :fio --name=randrw--filename=/tmp/disk_testfile--size=1G --bs=4k--rw=randrw--rwmixread=70 --direct=1--numjobs=4--runtime=60–time_based
 
-Read speed:32.5MB/s
+Read speed: 32.5 MB/s
 
-Writespeed:14MB/s<img src="./tjivnohu.png" style="width:7.5in;height:5in" /><img src="./23kig14m.png"
-style="width:7.23958in;height:1.32292in" />
+Write speed: 14 MB/s
+
+<img src="./tjivnohu.png" style="width:7.5in;height:5in" />
+
+<img src="./23kig14m.png" style="width:7.23958in;height:1.32292in" />
 
 System Latency:
 
-Inthisweweretryingtomeasuretheresponselatencyatidleand under load
-todeterminewhether the OSresponsivenessslowsdown.
+In this we were trying to measure the response latency at idle and under load to determine whether the OS responsiveness slows down.
 
-Beforeanystresstest,idlemetrics.
+Before any stress test, idle metrics.
 
-After stresstestingbothmemoryandCPU,thesystem latency
+After stress testing both memory and CPU, the system latency
 
-<img src="./ri2tctna.png" style="width:7.5in;height:2.33333in" /><img src="./kprgwgsd.png"
-style="width:2.76042in;height:1.01042in" />
+<img src="./ri2tctna.png" style="width:7.5in;height:2.33333in" />
+<img src="./kprgwgsd.png" style="width:2.76042in;height:1.01042in" />
 
-Results:LookingattheresultsoftheSystem
-latency,wecanseeatidlethereallatencywas0.008ms
-duringthestresstestwemeasured
-0.003swhichisoddaswewereexpectingtoseeahigher latencyas thesystem would
-havemoretohandle,these resultcould bebecausewewereonlystressing2cpu
-coresand only1gb ofram whichthesystem could handlemorestress.
+Results: Looking at the results of the System latency, we can see at idle the real latency was 0.008 ms. During the stress test we measured 0.003 s which is odd as we were expecting to see a higher latency as the system would have more to handle. These results could be because we were only stressing 2 cpu cores and only 1 gb of ram which the system could handle more stress.
 
-ServiceResponse:
+Service Response:
 
-Waystooptimizesystem performance:
+Ways to optimize system performance:
 
-Optimization1:Stop unused services
+Optimization 1: Stop unused services
 
-Ichecked activesystem serviceand havedisabled allthebackground appsand
-servicesthatareunused and disabled them astheyareusingsystem
-resourceswithnopurposeand itsawaste.The results showed lower background
-CPUusageand slightlyimproved responsetimefor shortcommandsan expected
-gainwhereitreducesoverhead.
+I checked active system service and have disabled all the background apps and services that are unused and disabled them as they are using system resources with no purpose and its a waste. The results showed lower background CPU usage and slightly improved response time for short commands an expected gain where it reduces overhead.
 
-Optimization2:SetCPUgovernortoperformance
+Optimization 2: Set CPU governor to performance
 
-ToreducefrequencyscalinglatencyIapplied theperformanceCPUgovernorfor
-thedurationofthetest. ThiskeepsCPUfrequencyhighand reducesrampup
-latencyfor workloads.Theresultsshowed reduced command latency(ms) and
-slightlymorestablethroughputunder load.Thetradeoffishigher power use and
-temperaturethischangewasapplied temporarilyfor measurementand document.
+To reduce frequency scaling latency I applied the performance CPU governor for the duration of the test. This keeps CPU frequency high and reduces ramp up latency for workloads. The results showed reduced command latency (ms) and slightly more stable throughput under load. The tradeoff is higher power use and temperature; this change was applied temporarily for measurement and document.
