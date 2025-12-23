@@ -1,99 +1,82 @@
-**Week** **4—Remote** **Administration&** **Security(Tasks1–7)**
+**Week 4 — Remote Administration & Security (Tasks 1–7)**
 
-**Server:**UbuntuVM(headless)—192.168.0.170
+**Server:** Ubuntu VM (headless) — 192.168.0.170
 
-**Workstation:**Windows10/11(PowerShell)
+**Workstation:** Windows 10/11 (PowerShell)
 
-**Objective:**Deploytheserverandimplement foundationalsecuritycontrols.
-Document allworkperformed**overSSH**fromtheworkstation, provide
-before/afterconfigurationcomparisons, capturescreenshots ofsuccessful
-SSHsessionsandcommands, andproduceaclearevidencebundleforthe
-recordeddemonstration.
+**Objective:** Deploy the server and implement foundational security controls. Document all work performed **over SSH** from the workstation, provide before/after configuration comparisons, capture screenshots of successful SSH sessions and commands, and produce a clear evidence bundle for the recorded demonstration.
 
-**Summaryof** **tasks** **completed**
+**Summary of tasks completed**
 
-> 1\. ConfigureSSHwith key-basedauthentication
->
-> 2\. ConfigureUFW firewallpermitting SSHfromonespecificworkstation only
->
-> 3\. Createanon-root administrativeuserandconfiguresudoprivileges 4.
-> SSHAccessEvidence(screenshots + commandoutputs)
->
-> 5\. ConfigurationFileswith before/aftercomparisons
-> (/etc/ssh/sshd_config, ufwrules)
->
-> 6\. FirewallDocumentationshowing completeruleset
->
-> 7\. RemoteAdministrationEvidencedemonstrating commandsexecuted viaSSH
+> 1. Configure SSH with key-based authentication  
+> 2. Configure UFW firewall permitting SSH from one specific workstation only  
+> 3. Create a non-root administrative user and configure sudo privileges  
+> 4. SSH Access Evidence (screenshots + command outputs)  
+> 5. Configuration Files with before/after comparisons (/etc/ssh/sshd_config, ufw rules)  
+> 6. Firewall Documentation showing complete ruleset  
+> 7. Remote Administration Evidence demonstrating commands executed via SSH
 
-Task1–Sshkeybased authentication
+Task 1 – Ssh key based authentication
 
-Inthistaskwillreplacepassword
-authenticationwithpublickeyauthenticationfor remote login.
+In this task will replace password authentication with public key authentication for remote login.
 
-Ssh-keygen–ted25519 –[c
-<u>pintilii.narcis7@gmail.com,</u>](mailto:pintilii.narcis7@gmail.com)commandtocreatekeypair
-onthe shellworkstation
+Ssh-keygen –t ed25519 –C <u>pintilii.narcis7@gmail.com</u> command to create key pair on the shell workstation
 
-<img src="./xs2neq4g.png" style="width:6.5in;height:4.02083in" /><img src="./zbkezm4m.png" style="width:6.5in;height:3.77083in" />
+<img src="./xs2neq4g.png" style="width:6.5in;height:4.02083in" />
+<img src="./zbkezm4m.png" style="width:6.5in;height:3.77083in" />
 
-Ssh-keygencreatesapulic/privatekeypair thepublicisinstalled in
-~/.ssh/authorised_keysontheserver
+Ssh-keygen creates a public/private key pair. The public is installed in ~/.ssh/authorized_keys on the server.
 
-chmod commandsenforcesecurepermissionsonthekeysdirectoryand file
+chmod command enforces secure permissions on the keys directory and file
 
 <img src="./sfmofhxb.png" style="width:6.5in;height:3.45833in" />
 
-1-------------------------
+1 -------------------------
 
-Task2–Firewall:allowSSH onlyfrom workstation
+Task 2 – Firewall: allow SSH only from workstation
 
-InthistaskIwillmakethefirewalltoallowsshfrom onetrusted admin.
+In this task I will make the firewall allow ssh from one trusted admin.
 
-Inthescreenshoticonnected tothesshserver from shell
+In the screenshot I connected to the ssh server from shell.
 
-Disabled passwordauthenticationrootloginno,and pukeyautheticationyes
+Disabled password authentication, PermitRootLogin no, and pubkey authentication yes.
 
-Ialsoeddited /etc/ssh/sshd_configand disabled
-botPasswordaAuthenticationand PermitRotLoginand ensured
-PubKeysAuthenticationisenabled,thenrestarted theserver
+I also edited /etc/ssh/sshd_config and disabled PasswordAuthentication and PermitRootLogin and ensured PubkeyAuthentication is enabled, then restarted the server.
 
-s
+<img src="./xfmm4lvf.png" style="width:6.5in;height:3.57292in" />
+<img src="./fosvdodi.png" style="width:6.5in;height:2.89583in" />
 
-<img src="./xfmm4lvf.png" style="width:6.5in;height:3.57292in" /><img src="./fosvdodi.png" style="width:6.5in;height:2.89583in" />
+In the next screenshot I allowed a specific IP with a specific port and added it to the firewall to allow remote login, also used sudo ufw enable to enable the firewall.
 
-InthenextscreenshotIallowed a specificIpwitha specificportand added
-ittothefirewall toallowremotelogin,alsoused
-sudoufwenable,toenablethefirewall
+Also checked its status with sudo ufw status numbered.
 
-alsochecked itsstatuswith,sudoufwstatusnumbered.
+Task 3 - User management and privileges
 
-Task3-User managementandprivialeges Thegoalofthistaskwastocreateanewuser
-adminuser,andgivehimsomeprivialge management,
+The goal of this task was to create a new admin user, and give him some privilege management.
 
 <img src="./ekxnk50y.png" style="width:6.5in;height:2.46875in" />
 
-Commands: sudoadduser adminuser
+Commands: sudo adduser adminuser
 
-Sudousermod –aG sudoadminuser getentpasswdadminuser
+sudo usermod –aG sudo adminuser getent passwd adminuser
 
-Adduser creatsanewaccount and usermod–agsudoaddstheuser tothesudogroup
-for adminprivileges
+Adduser creates a new account and usermod –aG sudo adds the user to the sudo group for admin privileges.
 
-Task4connected tothenewadminuser thatwascreated inthetaskabove
+Task 4 connected to the new admin user that was created in the task above
 
-<img src="./f45li0ls.png" style="width:6.5in;height:5.89583in" /><img src="./v0m4z5un.png" style="width:6.5in;height:0.95833in" />
+<img src="./f45li0ls.png" style="width:6.5in;height:5.89583in" />
+<img src="./v0m4z5un.png" style="width:6.5in;height:0.95833in" />
 
-task5–configurefiles:before&after
+Task 5 – configure files: before & after
 
-Beforeand after saved filesofthe/etc/ssh/sshd_config
+Before and after saved files of the /etc/ssh/sshd_config
 
-task6–Firewalldocumentation
+Task 6 – Firewall documentation
 
 Commands:
 
-Sudoufwstatusverbose
-Theufwverboseoutputs,labeleachruleanddescribeswhatitsfor
+sudo ufw status verbose  
+The ufw verbose outputs, label each rule and describes what it is for
 
 <img src="./tjpxje3d.png" style="width:6.5in;height:2.86458in" />
 
