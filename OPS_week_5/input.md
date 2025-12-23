@@ -1,201 +1,143 @@
-Task1:AppArmorConfigand testing
+Task 1: AppArmor Config and testing
 
 Objects
 
-ToenableAppArmor,verifyitisrunningandtesthowitlogssecurityeventsbeforeand
-after exectuing.
+To enable AppArmor, verify it is running and test how it logs security events before and after executing.
 
-For thistaskIhaveimplemented
-afewnewfeatures,whichareMandatoryaccesscontroland thisis
-usingapparmor,thishelp mesetrulesfor differentpeopleand
-role,whichreducetheir abilitiesto accessthingsoutsidetheir
-jobrole(accessto onlywhatyouneed) ,thishelpsreduceattacks.
+For this task I have implemented a few new features, which are Mandatory access control and this is using AppArmor, this help me set rules for different people and role, which reduce their abilities to access things outside their job role (access to only what you need), this helps reduce attacks.
 
-Imadesureinthelinesbellowthat AppArmorwasinstalled and
-activatedinontheUbuntoVM Looked atthelistofactivesecuritymodules
+I made sure in the lines below that AppArmor was installed and activated in on the Ubuntu VM. Looked at the list of active security modules.
 
-Checked ifapparmor wasrunning
+Checked if AppArmor was running.
 
--sudoaptupdate
+- sudo apt update  
+- sudo apt install -y apparmor apparmor-utils  
+- sudo apt install -y auditd audispd-plugins  
 
--sudoaptinstall-yapparmor apparmor-utils
+These give access to commands like apparmor-utils, aa-status, aa-enforce, aa-complain, aa-logprof and auditd and ausearch.
 
--sudoaptinstall–y auditspd-plugins
+sudo systemctl enable --now apparmor  
 
-Thesegiveacesstocomandslikeapparmor-utils,aa-status,aa-enforce,aa-complain,aa-logprofand
-auditd andausearch
+sudo systemctl status apparmor --no-pager  
 
-Sudosystemctlenable–nowapparmor
+<img src="./2nwclcbc.png" style="width:6.5in;height:1.69792in" />
 
-Sudosystemctlstatusapparmor –no-pager
+sudo aa-status – this shows the number of loaded profiles, and how many programs are in enforce or complain and lists profiles.
 
-<img src="./2nwclcbc.png" style="width:6.5in;height:1.69792in" />Sudoaa-status–thisshowsthenumber
-ofloaded profiles,and howmanyprograrm areinenforceor complain and
-listsprofiles.
+sudo apparmor_status  
 
-Sudoapparmor_status
+ls -l /etc/apparmor.d | sed -n '1,200p'  
 
-Ls–letc/apparmor.d\| sed 0n‘1,200p’
+sudo aa-status | sed -n '/profiles are in enforce mode/,$p' || true  
 
-Sudoaa-status\| sed –n‘/profilesareinenforcemode/,\$p’ \|\| true
+<img src="./truoemsn.png" style="width:6.5in;height:3.47917in" />
+<img src="./blfendqs.png" style="width:7.5in;height:3.63542in" />
+<img src="./o4dlej4s.png" style="width:7.5in;height:0.3125in" />
 
-<img src="./truoemsn.png" style="width:6.5in;height:3.47917in" /><img src="./blfendqs.png" style="width:7.5in;height:3.63542in" /><img src="./o4dlej4s.png" style="width:7.5in;height:0.3125in" />
+sudo journalctl -k --since "1 hour ago" | grep -i apparmor | sudo tee /tmp/apparmor_journal_recent.txt  
 
-sudojournalctl-k --since"1hour ago"\| grep -iapparmor
-\|sudotee/tmp/apparmor_journal_recent.txt
+sudo grep -i apparmor /var/log/syslog | tail -n 50 > /tmp/apparmor_syslog_tail.txt  
 
-sudogrep -iapparmor /var/log/syslog\|
-tail-n50\>/tmp/apparmor_syslog_tail.txt
+sudo aa-complain /etc/apparmor.d/usr.sbin.apache2  
+sudo aa-status | grep -i apache -n || true  
 
-Sudoaa-complain/etc/apparmor.d/usr.sbin.apache2 sudoaa-statuts\|grep
-–iapache–n\|\|true
+To ensure the system was actually enforcing security policies, by using the command sudo aa-status. This confirmed that 57 profiles were in “enforce mode,” meaning AppArmor is blocking restricted actions, not only just logging them.
 
-Toensurethesystem
-wasactuallyenforcingsecuritypolicies.Byusingthecommandsudoaa-status.
-Thisconfirmed that57 profileswerein“enforcemode,”meaningAppArmor
-isblockingrested actions
+Then with journalctl I looked at the audit logs and also grep to make sure that AppArmor was started correctly and logs all the events. This shows that the kernel is correctly tracking application behavior and is ready.
 
-notonlyjustloggingthem.Thenwith“journalact”ilooked attheauditlogsand
-also grep tomakesure thatAppArmorwasstartedcorrectlyand
-logsalltheevents.Thisshowsthatthekerneliscorrectly
-trackingapplicationbehaviorandisready.
+Confirms mode change.
 
-Confirmsmodechange
+I observed that:
 
-I observedthat:
+AppArmor was active and that it was loading profiles.  
+Logs showed status: profile load messages meaning that AppArmor was working.  
+The test was completed and AppArmor functionality was verified even without blocked events.
 
-Apparmor wasactiveand thatitwasloadingprofiles
+Task 2:
 
-Logsshowed status:profileloadmessagesmeaningthat Apparmorwasworking
-Thetestwascompleted andapparmor functionalitywasverified
-evenwithoutblocked events.
+To make sure that the server remains secure against new possible vulnerabilities without requiring constant manual intervention I have activated automatic security updates. I installed unattended upgrades and set it up with dpkg-reconfigure to download and install critical security updates. This is vital to make sure any new threats are being caught.
 
-Task2:
-
-Tomakesurethattheserver
-remainssecureagainstnewpossiblevulnerabilitieswithoutrequiring
-constantmanualinterventionIhaveactivatedautomaticsecurityupdates,Iinstalled
-unattended upgradesandsetitupwithdpkgreconfiguretodownload
-andinstallcriticalsecurityupadtes,thisisvital
-tomakesureanynewthreadsarebeingcaught.
-
-Iverified
-theconfigureationbychekingthe20autoupgradesfiles,whichconfirmedthattheupdatelist
-and
-theupgradesaresettostartbythemselves.Thenlastlyichecksthelogfiletomakesuretheservice
-wasworking.Thissetup makessuretheserver staysup
-todateagainstthenewsttypeofthreats,even whennotlogged in,updatesmanualy.
+I verified the configuration by checking the 20auto-upgrades files, which confirmed that the update list and the upgrades are set to start by themselves. Then lastly I checked the log file to make sure the service was working. This setup makes sure the server stays up to date against the newest type of threats, even when not logged in or updating manually.
 
 Objective:
 
-Toenableautomaticsystem sothemachinesstayssecure.
+To enable automatic system updates so the machine stays secure.
 
-sudoaptupdate
+sudo apt update  
 
-Sudoaptinstallunattended-upgrades–y
+sudo apt install unattended-upgrades -y  
 
-sudodpkg-reconfigure–priority-lowunattended-upgrade
+sudo dpkg-reconfigure --priority-low unattended-upgrades  
 
-Observation:atutomaticupdatessuccessfullyenabled.Theconfigurationfileconfirmed
+Observation: automatic updates successfully enabled. The configuration file confirmed.
 
-<img src="./0yfrkgfk.png" style="width:7.5in;height:0.98958in" /><img src="./2aufabl1.png" style="width:7.5in;height:3.35417in" />
+<img src="./0yfrkgfk.png" style="width:7.5in;height:0.98958in" />
+<img src="./2aufabl1.png" style="width:7.5in;height:3.35417in" />
 
-Sudotail –n30 /var/log/unattended-upgrades/unattended-upgrades.log
+sudo tail -n 30 /var/log/unattended-upgrades/unattended-upgrades.log  
 
-Task3:Confgurefail2ban
+Task 3: Configure Fail2Ban
 
-InthistaskIinstalled and configured Fail2BantoprotecttheSSH
-connectionfrom beingattacked from
-thingslikebruteforce.Fail2Banworksbyscanninglogfilesfor repeated failed
-loginattemptsand updatingthefirewalltobaniftherestoomanyfailed
-attempsfromaspecificip,thentheip isbanned to preventthem from
-continuiongtheattack.
+In this task I installed and configured Fail2Ban to protect the SSH connection from being attacked from things like brute force. Fail2Ban works by scanning log files for repeated failed login attempts and updating the firewall to ban if there are too many failed attempts from a specific IP, then the IP is banned to prevent them from continuing the attack.
 
-After installingit,imadesuretheserver
-isrunningwith“systemctlstatusfail2ban”.Theniused
-“fail2ban-cleintstatussshd ”tocheck SSH connectionand itsjail.Thisshowed
-methatthefilter is workingand lookingfor pottentialattacks.Thisisanother
-layer ofsecuritythathelpstheover system to makesureitremainsprotected
-againsautomaticblockingbotsor attackerstryingtoguesspasswords.
+After installing it, I made sure the server is running with “systemctl status fail2ban”. Then I used “fail2ban-client status sshd” to check the SSH connection and its jail. This showed me that the filter is working and looking for potential attacks. This is another layer of security that helps the overall system to make sure it remains protected against automatic blocking bots or attackers trying to guess passwords.
 
-Objective,Installand configureFAIL2BAN ontheserver toprotectSSH
-againstbrute-forceattacks.
-BellowtherespicturewithsomeofthethingsI'vedonetodothis.
+Objective: Install and configure Fail2Ban on the server to protect SSH against brute-force attacks.
 
-Sudoaptinstallfail2ban -installsthepackagesnecessarytorun fail2ban
+Below there is picture with some of the things I've done to do this.
 
-sudosystemctlrestartfail2ban
+sudo apt install fail2ban - installs the packages necessary to run Fail2Ban  
 
-Sudosystemctlstatusfail2ban<img src="./iapbcgay.png"
-style="width:7.0625in;height:2.88542in" />
+sudo systemctl restart fail2ban  
 
-Sudofail2ban-clientstatussshd
+sudo systemctl status fail2ban  
 
-ThesearethecommandsI'veused togetfail2baninstalled alsoadded
-somethingsintothelocalfileof
-Fail2bantomakeitmoresecure,inthescreenshotbelowyoull
-beabletoseethatFAIL2BAN isup and running.
+<img src="./iapbcgay.png" style="width:7.0625in;height:2.88542in" />
 
-Task4:Security
+sudo fail2ban-client status sshd  
 
-Manualsecuritycheckscanbedonebyhumansbutcanhaveerrors,sobycreatingascript,toautomate
-theverificationoftheserverssecurity.Thisscriptwill
-checkthestatusofthemainserveiceand checks thatSSH
-isactive,checksthefirewallisworkingtoolastlychecksfail2banisrunningtoo.
+These are the commands I've used to get Fail2Ban installed, also added some things into the local file of Fail2Ban to make it more secure. In the screenshot below you'll be able to see that Fail2Ban is up and running.
 
-Thiswayitmakessurethateverytimethescriptisbeingrun,allourlevelsofsecurityarebingchecked
-to
-makesuretheyareactiveandrunning.Ifanyservicesfailthisscripwouldimmediatlyshowthemissing
-securitycontrolallowingfor quickcomeback,thishelpsreducehumanerror
-alsomakesitmuchquicker and
-moreefficientbytypingrunningonesinglescriptyoucanfindoutalotofinformation.
+Task 4: Security
 
-Icreated ascriptthatiscalled securitybaseline.sh.
+Manual security checks can be done by humans but can have errors, so by creating a script to automate the verification of the server's security. This script will check the status of the main services and checks that SSH is active, checks the firewall is working, to lastly checks Fail2Ban is running too.
 
-Imadethescriptexecutableand alsoexecuteditviaSSH tovalidatethemyserver
-securitybaseline
+This way it makes sure that every time the script is being run, all our levels of security are being checked to make sure they are active and running. If any services fail this script would immediately show the missing security control allowing for quick comeback. This helps reduce human error, also makes it much quicker and more efficient by typing and running one single script you can find out a lot of information.
 
-<img src="./tfakcjvo.png" style="width:7.5in;height:6.17708in" /><img src="./qv4suv1p.png" style="width:7.5in;height:3.13542in" />
+I created a script that is called securitybaseline.sh.
 
-Task5:RemoteMonitoringScript<img src="./q4iqd3ur.png" style="width:7.5in;height:3.5625in" />
+I made the script executable and also executed it via SSH to validate the server security baseline.
 
-Toenableremoteadminwithoutneedingdirectconsoleaccess.Imadeascript
-utilizesSSH toconnect totheUbuntuserver,executed
-performancecommandslikeCPU,memoryand diskspace and savesthe
-outputtoalocallogfile.
+<img src="./tfakcjvo.png" style="width:7.5in;height:6.17708in" />
+<img src="./qv4suv1p.png" style="width:7.5in;height:3.13542in" />
 
-Thiswayitallowsmeto createasnapshotoftheserver healthover
-time.ByrunningthescrpitIgather metricsintimeand logged inusersand
-resourceconsumption,showingthaticanmonitorthe server
-performancesecurelyfrom aremotelocation.
+Task 5: Remote Monitoring Script
 
-Objective:Wastocreateand runascriptform mylaptopthatconnectstothe
-ubuntusever withthessh and collectsperformancemetricsremotely
+<img src="./q4iqd3ur.png" style="width:7.5in;height:3.5625in" />
 
-Script,thescriptmonitorstheseversperformance,itsnamed
-monitor-server.sh,thescriptconnectsto theserver usingSSH and
-gatherssystem performanceinformationsuchas:
+To enable remote admin without needing direct console access, I made a script that utilizes SSH to connect to the Ubuntu server, executed performance commands like CPU, memory and disk space and saves the output to a local log file.
 
-Cpuload
+This way it allows me to create a snapshot of the server health over time. By running the script I gather metrics in time and logged in users and resource consumption, showing that I can monitor the server performance securely from a remote location.
 
-Memoryusage
+Objective: Was to create and run a script from my laptop that connects to the Ubuntu server with SSH and collects performance metrics remotely.
 
-Diskusage
+Script: the script monitors the server's performance, it is named monitor-server.sh. The script connects to the server using SSH and gathers system performance information such as:
 
-System uptime
+CPU load  
+Memory usage  
+Disk usage  
+System uptime  
+Logged-in users  
 
-Logged-inusers
+Command used to create script: nano ~/monitor-server.sh  
 
-Command used tocreatescript:nano~/monitor-server.sh
+Command used to make the script executable: chmod +x ~/monitor-server.sh  
 
-Command used tomakethescriptexecutable:chmod +x ~/monitor-server.sh
+I executed the file to connect remotely and collect metrics.
 
-Iexecuted thefiletoconnectremotelyand collectmetrics
+<img src="./mnyot3u0.png" style="width:7.5in;height:0.41667in" />
+<img src="./e1x02ral.png" style="width:7.5in;height:0.72917in" />
 
-<img src="./mnyot3u0.png" style="width:7.5in;height:0.41667in" /><img src="./e1x02ral.png" style="width:7.5in;height:0.72917in" />
+Verification of log file
 
-Verificationoflogfilea
-
-ThistaskDemonstratedsuccessfulremotemonitoringusingsshfrom
-mylaptop.Thescriptwas collected and stored system performancemetricsfrom
-theserver,verifyingsecureremote administrationandmonitoringabilities.
+This task demonstrated successful remote monitoring using SSH from my laptop. The script collected and stored system performance metrics from the server, verifying secure remote administration and monitoring abilities.
